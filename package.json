@@ -4,6 +4,7 @@
   "description": "online payment solution developed during Movile Hackathon 3",
   "main": "index.js",
   "dependencies": {
+    "aws-sdk": "^2.404.0",
     "express": "^4.16.4"
   },
   "devDependencies": {
