@@ -4,10 +4,11 @@
   "description": "online payment solution developed during Movile Hackathon 3",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
     "jest": "^24.1.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "jest",
     "start": "node src/index.js"
