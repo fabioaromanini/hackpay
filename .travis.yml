@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t fabioaromanini/hackpay -f Dockerfile.test .
+
+script:
+  - docker run fabioaromanini/hackpay
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "hackpay"
+  env: "Hackpay-env"
+  bucket_name: "hackpay-bucket"
+  bucket_path: "hackpay"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: 
+    secure: "$AWS_SECRET_ACCESS_KEY"
