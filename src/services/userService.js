@@ -1,4 +1,5 @@
 const uuid = require('uuid/v1');
+const userRepository = require('../repositories/userRepository');
 
 const createToken = () => {
   const fullToken = uuid();
