@@ -2,6 +2,16 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const userService = require('../services/userService');
 
+const moment = require('moment');
+
+const isOldToken = tokenDateString => {
+  const tokenDate = moment(tokenDateString);
+  const now = new Date();
+
+  // gets difference in minutes
+  return tokenDate.diff(now, 'm') < -20;
+};
+
 module.exports = app => {
   app.use(passport.initialize());
   app.use(passport.session());
@@ -35,11 +45,22 @@ module.exports = app => {
               email: 'User not found',
             },
           });
-        } else if (user.token !== token) {
+        }
+
+        if (user.token !== token) {
           return cb(null, false, {
             status: 403,
             message: {
               password: 'Invalid password',
+            },
+          });
+        }
+
+        if (isOldToken(user.updatedAt)) {
+          return cb(null, false, {
+            status: 403,
+            message: {
+              password: 'Expired token',
             },
           });
         }
