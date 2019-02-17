@@ -10,7 +10,9 @@ module.exports = app => {
       if (userService.validateUserForSignup(user)) {
         return res.status(403).send('Invalid user');
       }
-      const payer = await paymentService.createPayer(user);
+      const userPayer = await paymentService.createPayer(user);
+      await userService.persistUser(userPayer);
+      res.send(userPayer);
     } catch (e) {
       res.status(500).send('Internal Error');
     }

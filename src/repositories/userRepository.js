@@ -31,3 +31,9 @@ module.exports.updateToken = (phoneNumber, token) =>
       },
     })
     .promise();
+
+module.exports.persistUser = user =>
+  dynamoDb.put({
+    TableName,
+    Item: user,
+  });

@@ -22,9 +22,14 @@ const updateToken = async (phoneNumber, token) => {
   await userRepository.updateToken(phoneNumber, token);
 };
 
+const persistUser = async user => {
+  await userRepository.persistUser(user);
+};
+
 module.exports = {
   createToken,
   getUser,
   validateUserForSignup,
   updateToken,
+  persistUser,
 };
