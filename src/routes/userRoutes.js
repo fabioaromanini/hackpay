@@ -1,6 +1,7 @@
 const passport = require('passport');
 const userService = require('../services/userService');
 const notificationService = require('../services/notificationService');
+const paymentService = require('../services/paymentService');
 
 module.exports = app => {
   app.post('/users/new', async (req, res) => {
@@ -9,6 +10,7 @@ module.exports = app => {
       if (userService.validateUserForSignup(user)) {
         return res.status(403).send('Invalid user');
       }
+      const payer = await paymentService.createPayer(user);
     } catch (e) {
       res.status(500).send('Internal Error');
     }

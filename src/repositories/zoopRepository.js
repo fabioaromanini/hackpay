@@ -1,35 +1,44 @@
-const API_PUBLISHABLE_KEY = "zpk_test_ogmi3TJnV33UDljdN4n8aRit";
-const MARKETPLACE_ID = "3249465a7753536b62545a6a684b0000";
-const API_GW_URL_BASE = "https://api.zoop.ws";
-
 var axios = require('axios');
 
+const API_PUBLISHABLE_KEY = 'zpk_test_ogmi3TJnV33UDljdN4n8aRit';
+const MARKETPLACE_ID = '3249465a7753536b62545a6a684b0000';
+const API_GW_URL_BASE = 'https://api.zoop.ws';
+
 const headers = {
-    'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
 };
 
 const auth = {
-    username: API_PUBLISHABLE_KEY,
-    password: ''
+  username: API_PUBLISHABLE_KEY,
+  password: '',
 };
 
-module.exports.createUser = async (firstName, lastName, taxpayer_id, phone, email) => {
-    const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/buyers`;
+module.exports.createUser = async (
+  firstName,
+  lastName,
+  taxpayer_id,
+  phone,
+  email
+) => {
+  const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/buyers`;
 
-    const data = {
-        first_name: firstName,
-        last_name: lastName,
-        taxpayer_id,
-        phone_number: phone,
-        email
-      };
-    try {
-        const response = await axios.post(url, data, {headers: headers, auth: auth});
-        return response.data
-    } catch (e) {
-        throw e
-    }
-}
+  const data = {
+    first_name: firstName,
+    last_name: lastName,
+    taxpayer_id,
+    phone_number: phone,
+    email,
+  };
+  try {
+    const response = await axios.post(url, data, {
+      headers: headers,
+      auth: auth,
+    });
+    return response.data;
+  } catch (e) {
+    throw e;
+  }
+};
 
 // module.exports.cardAssociate = async (customer, token) => {
 //     const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/cards`;
@@ -98,4 +107,3 @@ module.exports.createUser = async (firstName, lastName, taxpayer_id, phone, emai
 //     const response = await axios.post(url, data, {headers: headers, auth: auth});
 //     return response.data
 // }
-
