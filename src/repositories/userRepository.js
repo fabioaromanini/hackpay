@@ -4,9 +4,10 @@ const { USERS_TABLE: TableName, REGION } = process.env;
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({ region: REGION });
 
-module.exports.listUsers = () =>
+module.exports.getUser = id =>
   dynamoDb
-    .scan({
-      TableName
+    .get({
+      TableName,
+      Key: { id },
     })
     .promise();
