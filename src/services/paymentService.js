@@ -31,7 +31,13 @@ const associateCardToken = async (user, cardToken) => {
   }
 };
 
+const getBalance = async user => {
+  const response = await paymentRepository.getBalance(user.id);
+  return response.items.current_balance;
+};
+
 module.exports = {
   createPayer,
+  getBalance,
   associateCardToken,
 };

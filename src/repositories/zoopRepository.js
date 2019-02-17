@@ -1,4 +1,4 @@
-var axios = require('axios');
+const axios = require('axios');
 
 const API_PUBLISHABLE_KEY = 'zpk_test_ogmi3TJnV33UDljdN4n8aRit';
 const MARKETPLACE_ID = '3249465a7753536b62545a6a684b0000';
@@ -129,8 +129,8 @@ module.exports.transactionP2P = async (
   }
 };
 
-module.exports.getBalance = async (resource, id) => {
-  const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/${resource}/${id}/balances`;
+module.exports.getBalance = async id => {
+  const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/buyers/${id}/balances`;
   try {
     const response = await axios.get(url, { headers: headers, auth: auth });
     return response.data;
