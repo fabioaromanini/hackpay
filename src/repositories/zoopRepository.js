@@ -25,77 +25,87 @@ module.exports.createUser = async (firstName, lastName, taxpayer_id, phone, emai
       };
     try {
         const response = await axios.post(url, data, {headers: headers, auth: auth});
+        return response.data;
+    } catch (e) {
+        throw e;
+    }
+}
+
+module.exports.cardAssociate = async (customer, token) => {
+    const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/cards`;
+
+    const data = {
+        customer,
+        token
+      };
+
+    try {
+        const response = await axios.post(url, data, {headers: headers, auth: auth});
+        return response.data;
+    } catch (e) {
+        throw e;
+    }
+}
+
+module.exports.preAuthCreditCard = async (amount, description, on_behalf_of, customer) => {
+    const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/transactions`;
+
+    const data = {
+        amount,
+        currency: "BRL",
+        description,
+        on_behalf_of,
+        customer,
+        payment_type: "credit",
+        capture: "false"
+      };
+    try {
+        const response = await axios.post(url, data, {headers: headers, auth: auth});
+        return response.data;
+    } catch (e) {
+        throw e;
+    }
+}
+
+module.exports.paymentCapture = async (amount, transactionID, on_behalf_of) => {
+    const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/transactions/${transactionID}/capture`;
+
+    const data = {
+        amount,
+        on_behalf_of
+      };
+
+    try {
+        const response = await axios.post(url, data, {headers: headers, auth: auth});
         return response.data
     } catch (e) {
         throw e
     }
 }
 
-// module.exports.cardAssociate = async (customer, token) => {
-//     const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/cards`;
+module.exports.transactionP2P = async (amount, description, transfer_date, ownerID, receiverID) => {
+    const url = `${API_GW_URL_BASE}/v2/marketplaces/${MARKETPLACE_ID}/transfers/${ownerID}/to/${receiverID}`;
 
-//     const data = {
-//         customer,
-//         token
-//       };
+    const data = {
+        amount,
+        description,
+        transfer_date
+      };
+    try {
+        const response = await axios.post(url, data, {headers: headers, auth: auth});
+        return response.data
+    } catch (e) {
+        throw e
+    }
+}
 
-//     const response = await axios.post(url, data, {headers: headers, auth: auth});
-//     return response.data
-// }
-
-// module.exports.preAuthCreditCard = async (amount, description, on_behalf_of, customer) => {
-//     const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/transactions`;
-
-//     const data = {
-//         amount,
-//         currency: "currency",
-//         description,
-//         on_behalf_of,
-//         customer,
-//         payment_type: "credit",
-//         reference_id: "1234",
-//         capture: "false"
-//       };
-
-//     const response = await axios.post(url, data, {headers: headers, auth: auth});
-//     return response.data
-// }
-
-// module.exports.paymentCapture = async (amount, transactionID, on_behalf_of) => {
-//     const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/${transactionID}/capture`;
-
-//     const data = {
-//         amount,
-//         on_behalf_of
-//       };
-
-//     const response = await axios.post(url, data, {headers: headers, auth: auth});
-//     return response.data
-// }
-
-// module.exports.transactionP2P = async (amount, description, transfer_date, ownerID, receiverID) => {
-//     const url = `${API_GW_URL_BASE}/v2/marketplaces/${MARKETPLACE_ID}/transfers/${ownerID}/to/${receiverID}`;
-
-//     const data = {
-//         amount,
-//         description,
-//         transfer_date
-//       };
-
-//     const response = await axios.post(url, data, {headers: headers, auth: auth});
-//     return response.data
-// }
-
-// module.exports.getBalance = async (amount, description, transfer_date, ownerID, receiverID) => {
-//     const url = `${API_GW_URL_BASE}/v2/marketplaces/${MARKETPLACE_ID}/transfers/${ownerID}/to/${receiverID}`;
-//     console.log(url)
-//     const data = {
-//         amount,
-//         description,
-//         transfer_date
-//       };
-
-//     const response = await axios.post(url, data, {headers: headers, auth: auth});
-//     return response.data
-// }
+module.exports.getBalance = async (resource, id) => {
+    const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/${resource}/${id}/balances`;
+    try {
+        const response = await axios.get(url, {headers: headers, auth: auth});
+        return response.data
+    } catch (e) {
+        throw e
+    }
+}
 
