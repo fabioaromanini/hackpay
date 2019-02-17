@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const userRepository = require('../repositories/userRepository');
+const userService = require('../services/userService');
 
 module.exports = app => {
   app.use(passport.initialize());
@@ -12,7 +12,7 @@ module.exports = app => {
 
   passport.deserializeUser(async (phoneNumber, callback) => {
     try {
-      const { Item: user } = await userRepository.getUser(phoneNumber);
+      const user = await userService.getUser(phoneNumber);
       callback(null, user);
     } catch (e) {
       callback(e);
@@ -26,7 +26,7 @@ module.exports = app => {
         passwordField: 'token',
       },
       async (phoneNumber, token, cb) => {
-        const { Item: user } = await userRepository.getUser(phoneNumber);
+        const user = await userService.getUser(phoneNumber);
 
         if (user === null) {
           return cb(null, false, {
