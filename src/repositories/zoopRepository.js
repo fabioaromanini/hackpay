@@ -1,8 +1,6 @@
 const axios = require('axios');
 
-const API_PUBLISHABLE_KEY = 'zpk_test_ogmi3TJnV33UDljdN4n8aRit';
-const MARKETPLACE_ID = '3249465a7753536b62545a6a684b0000';
-const API_GW_URL_BASE = 'https://api.zoop.ws';
+const { API_PUBLISHABLE_KEY, MARKETPLACE_ID, API_GW_URL_BASE } = process.env;
 
 const headers = {
   'Content-Type': 'application/json',
