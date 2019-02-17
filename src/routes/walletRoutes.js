@@ -1,4 +1,4 @@
-const paymentRepository = require('../repositories/zoopRepository');
+const paymentService = require('../services/paymentService');
 
 const { HACK_PAY_ID } = process.env;
 
@@ -8,30 +8,7 @@ module.exports = app => {
     const { destiny, amount } = req.body;
     const intAmount = parseInt(amount);
 
-    // in order to achieve the fee payment, and cash-back, first we transfer
-    // money to the seller, then we transfer the cashback and fee from the seller to
-    // our platform, then finally we transfer the cashback to the user
-    await paymentRepository.transactionP2P(
-      intAmount,
-      'BUY',
-      user.id,
-      destiny.id
-    );
-
-    await paymentRepository.transactionP2P(
-      intAmount * (user.fee + user.cashback),
-      'FEE + CASHBACK',
-      destiny.id,
-      HACK_PAY_ID
-    );
-
-    await paymentRepository.transactionP2P(
-      intAmount * user.cashback,
-      'CASHBACK',
-      HACK_PAY_ID,
-      user.id
-    );
-
+    await paymentService.transferAndCashback(user, destiny, intAmount);
     res.send('');
   });
 
