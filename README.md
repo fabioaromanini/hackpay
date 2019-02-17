@@ -1,8 +1,8 @@
-# Hackpay Backend
+# Payme Backend
 
 [![Build Status](https://travis-ci.org/fabioaromanini/hackpay.svg?branch=master)](https://travis-ci.org/fabioaromanini/hackpay)
 
-Node.js express aplication, configured for continuous integration/deploy on a Elastic Beanstalk environemnt, using Travis as ci tool.
+Node.js express aplication, configured for continuous integration/deploy on a Elastic Beanstalk environemnt, using Travis as ci tool. 
 In order to run this application, some enviroment variables are required:
 
 - API_GW_URL_BASE (zoop api)
