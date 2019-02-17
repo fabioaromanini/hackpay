@@ -1,5 +1,6 @@
 const uuid = require('uuid/v1');
 const { validateBr, maskBr } = require('js-brasil');
+const userRepository = require('../repositories/userRepository');
 
 const createToken = () => {
   const fullToken = uuid();
@@ -17,8 +18,13 @@ const validateUserForSignup = user => {
   return validateBr.cpf(maskedCpf);
 };
 
+const updateToken = async (phoneNumber, token) => {
+  await userRepository.updateToken(phoneNumber, token);
+};
+
 module.exports = {
   createToken,
   getUser,
   validateUserForSignup,
+  updateToken,
 };

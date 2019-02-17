@@ -5,9 +5,11 @@
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.404.0",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "js-brasil": "^1.1.9",
+    "moment": "^2.24.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "uuid": "^3.3.2"

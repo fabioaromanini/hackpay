@@ -1,5 +1,6 @@
 const passport = require('passport');
 const userService = require('../services/userService');
+const notificationService = require('../services/notificationService');
 
 module.exports = app => {
   app.post('/users/new', async (req, res) => {
@@ -47,6 +48,10 @@ module.exports = app => {
     }
 
     const token = userService.createToken();
-    res.send({ token });
+    await Promise.all([
+      userService.updateToken(phoneNumber, token),
+      notificationService.sendTokenNotification(phoneNumber, token),
+    ]);
+    res.send();
   });
 };
