@@ -39,7 +39,7 @@ module.exports = app => {
     const token = userService.createToken();
     await Promise.all([
       userService.updateToken(phoneNumber, token),
-      notificationService.notifyNewToken(phoneNumber, token),
+      notificationService.sendTokenNotification(phoneNumber, token),
     ]);
     res.send({ token });
   });
