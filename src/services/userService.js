@@ -6,6 +6,12 @@ const createToken = () => {
   return fullToken.substring(0, tokenSize);
 };
 
+const getUser = async phoneNumber => {
+  const { Item: user } = await userRepository.getUser(phoneNumber);
+  return user;
+};
+
 module.exports = {
   createToken,
+  getUser,
 };

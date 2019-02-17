@@ -1,4 +1,5 @@
 const passport = require('passport');
+const userService = require('../services/userService');
 
 module.exports = app => {
   app.post('/users/login', function(req, res, next) {
@@ -24,5 +25,17 @@ module.exports = app => {
         return res.send(user);
       });
     })(req, res, next);
+  });
+
+  app.post('/users/generateToken', async (req, res) => {
+    const { phoneNumber } = req.body;
+    const user = await userService.getUser(phoneNumber);
+
+    if (!user) {
+      return res.status(403).send({ message: 'User not found!' });
+    }
+
+    const token = userService.createToken();
+    res.send({ token });
   });
 };
