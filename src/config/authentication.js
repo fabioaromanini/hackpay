@@ -26,7 +26,7 @@ module.exports = app => {
         passwordField: 'token',
       },
       async (phoneNumber, token, cb) => {
-        const user = await userRepository.getUser(phoneNumber);
+        const { Item: user } = await userRepository.getUser(phoneNumber);
 
         if (user === null) {
           return cb(null, false, {
