@@ -140,3 +140,25 @@ module.exports.getBalance = async (resource, id) => {
     throw e;
   }
 };
+
+module.exports.tokenizeCard = async () => {
+  const url = `${API_GW_URL_BASE}/v1/marketplaces/${MARKETPLACE_ID}/cards/tokens`;
+
+  const data = {
+    holder_name: 'MOVILEHACK WINNER CREDIT CARD',
+    expiration_month: '09',
+    expiration_year: '2020',
+    security_code: '654',
+    card_number: '4539003370725497',
+  };
+
+  try {
+    const response = await axios.post(url, data, {
+      headers: headers,
+      auth: auth,
+    });
+    return response.data;
+  } catch (e) {
+    throw e;
+  }
+};
