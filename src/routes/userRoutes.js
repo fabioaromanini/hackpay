@@ -9,7 +9,8 @@ module.exports = app => {
   app.post('/users/new', async (req, res) => {
     try {
       const user = req.body;
-      if (!userService.validateUserForSignup(user)) {
+      const validUser = await userService.validateUserForSignup(user);
+      if (!validUser) {
         return res.status(403).send('Invalid user');
       }
       const userPayer = await paymentService.createPayer(user);

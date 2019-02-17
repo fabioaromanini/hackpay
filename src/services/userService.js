@@ -13,9 +13,14 @@ const getUser = async phoneNumber => {
   return user;
 };
 
-const validateUserForSignup = user => {
+const validateUserForSignup = async user => {
   const maskedCpf = maskBr.cpf(user.cpf);
-  return validateBr.cpf(maskedCpf);
+  const isValidCpf = validateBr.cpf(maskedCpf);
+  if (!isValidCpf) {
+    return false;
+  }
+  const existingUserWithSamePhoneNumber = await getUser(user);
+  return !existingUserWithSamePhoneNumber;
 };
 
 const updateToken = async (phoneNumber, token) => {
