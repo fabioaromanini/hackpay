@@ -22,6 +22,16 @@ const createPayer = async user => {
   };
 };
 
+const associateCardToken = async (user, cardToken) => {
+  try {
+    const id = user.id;
+    await paymentRepository.cardAssociate(id, cardToken);
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   createPayer,
+  associateCardToken,
 };

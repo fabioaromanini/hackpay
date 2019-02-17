@@ -157,7 +157,7 @@ module.exports.tokenizeCard = async () => {
       headers: headers,
       auth: auth,
     });
-    return response.data;
+    return response.data.id;
   } catch (e) {
     throw e;
   }

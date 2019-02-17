@@ -3,6 +3,8 @@ const userService = require('../services/userService');
 const notificationService = require('../services/notificationService');
 const paymentService = require('../services/paymentService');
 
+const paymentRepository = require('../repositories/zoopRepository');
+
 module.exports = app => {
   app.post('/users/new', async (req, res) => {
     try {
@@ -15,6 +17,16 @@ module.exports = app => {
       res.send(userPayer);
     } catch (e) {
       res.status(500).send('Internal Error');
+    }
+  });
+
+  app.post('/users/card', async (req, res) => {
+    const token = paymentRepository.tokenizeCard();
+    try {
+      await paymentService.associateCardToken(req.user, token);
+      res.send('ok');
+    } catch (e) {
+      res.status(406).send();
     }
   });
 
