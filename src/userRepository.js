@@ -1,8 +1,12 @@
 const AWS = require('aws-sdk');
 
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const tableName = process.env.USERS_TABLE;
+const {
+    USERS_TABLE: TableName,
+    REGION
+} = process.env;
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient({ region: REGION });
 
 module.exports.listUsers = () => dynamoDb.scan({
-    TableName: USERS_TABLE,
+    TableName,
 }).promise();
