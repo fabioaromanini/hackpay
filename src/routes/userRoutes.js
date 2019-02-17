@@ -2,6 +2,17 @@ const passport = require('passport');
 const userService = require('../services/userService');
 
 module.exports = app => {
+  app.post('/users/new', async (req, res) => {
+    try {
+      const user = req.body;
+      if (userService.validateUserForSignup(user)) {
+        return res.status(403).send('Invalid user');
+      }
+    } catch (e) {
+      res.status(500).send('Internal Error');
+    }
+  });
+
   app.post('/users/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
       if (err) {

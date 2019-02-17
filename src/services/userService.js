@@ -1,4 +1,5 @@
 const uuid = require('uuid/v1');
+const { validateBr, maskBr } = require('js-brasil');
 
 const createToken = () => {
   const fullToken = uuid();
@@ -11,7 +12,13 @@ const getUser = async phoneNumber => {
   return user;
 };
 
+const validateUserForSignup = user => {
+  const maskedCpf = maskBr.cpf(user.cpf);
+  return validateBr.cpf(maskedCpf);
+};
+
 module.exports = {
   createToken,
   getUser,
+  validateUserForSignup,
 };
