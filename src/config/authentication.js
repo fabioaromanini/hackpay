@@ -28,7 +28,7 @@ module.exports = app => {
       async (phoneNumber, token, cb) => {
         const user = await userService.getUser(phoneNumber);
 
-        if (user === null) {
+        if (!user) {
           return cb(null, false, {
             status: 403,
             message: {
