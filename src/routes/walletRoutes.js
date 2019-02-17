@@ -1,7 +1,5 @@
 const paymentService = require('../services/paymentService');
 
-const { HACK_PAY_ID } = process.env;
-
 module.exports = app => {
   app.post('/wallet/transfer', async (req, res) => {
     const user = req.user;
@@ -17,20 +15,7 @@ module.exports = app => {
     const amount = parseInt(req.body.amount);
 
     try {
-      await paymentRepository.preAuthCreditCard(
-        amount,
-        'CASH IN',
-        HACK_PAY_ID,
-        user.id
-      );
-
-      await paymentRepository.transactionP2P(
-        amount,
-        'CASH_IN',
-        HACK_PAY_ID,
-        user.id
-      );
-
+      await paymentService.cashIn(user, amount);
       res.send('ok');
     } catch (e) {
       res.status(403).send();

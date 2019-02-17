@@ -64,9 +64,26 @@ const transferAndCashback = async (sourceUser, destinyUser, amount) => {
   );
 };
 
+const cashIn = async (user, amount) => {
+  await paymentRepository.preAuthCreditCard(
+    amount,
+    'CASH IN',
+    HACK_PAY_ID,
+    user.id
+  );
+
+  await paymentRepository.transactionP2P(
+    amount,
+    'CASH_IN',
+    HACK_PAY_ID,
+    user.id
+  );
+};
+
 module.exports = {
   createPayer,
   getBalance,
   associateCardToken,
   transferAndCashback,
+  cashIn,
 };
