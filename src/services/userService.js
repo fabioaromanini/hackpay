@@ -13,13 +13,14 @@ const getUser = async phoneNumber => {
   return user;
 };
 
-const validateUserForSignup = async user => {
+const validateUserCPF = user => {
   const maskedCpf = maskBr.cpf(user.cpf);
   const isValidCpf = validateBr.cpf(maskedCpf);
-  if (!isValidCpf) {
-    return false;
-  }
-  const existingUserWithSamePhoneNumber = await getUser(user);
+  return isValidCpf;
+};
+
+const validateUserPhoneNumber = async user => {
+  const existingUserWithSamePhoneNumber = await getUser(user.phoneNumber);
   return !existingUserWithSamePhoneNumber;
 };
 
@@ -32,9 +33,10 @@ const persistUser = async user => {
 };
 
 module.exports = {
+  validateUserPhoneNumber,
   createToken,
   getUser,
-  validateUserForSignup,
+  validateUserCPF,
   updateToken,
   persistUser,
 };

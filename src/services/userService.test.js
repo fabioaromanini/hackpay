@@ -8,9 +8,9 @@ describe('User Service', () => {
 
   it("should validate user's document", () => {
     const invalidCpf = '00000000023';
-    expect(userService.validateUserForSignup({ cpf: invalidCpf })).toBeFalsy();
+    expect(userService.validateUserCPF({ cpf: invalidCpf })).toBeFalsy();
 
     const validCpf = '04416547030';
-    expect(userService.validateUserForSignup({ cpf: validCpf })).toBeTruthy();
+    expect(userService.validateUserCPF({ cpf: validCpf })).toBeTruthy();
   });
 });
