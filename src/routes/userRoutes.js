@@ -3,8 +3,6 @@ const userService = require('../services/userService');
 const notificationService = require('../services/notificationService');
 const paymentService = require('../services/paymentService');
 
-const paymentRepository = require('../repositories/zoopRepository');
-
 module.exports = app => {
   app.post('/users/new', async (req, res) => {
     try {
@@ -22,16 +20,16 @@ module.exports = app => {
   });
 
   app.get('/users/balance', async (req, res) => {
-    const user = req.user || { id: '00594a5c10e240988a0e6e2842f067bf' };
+    const { user } = req;
     const balance = await paymentService.getBalance(user.id);
     res.send(balance);
   });
 
   app.post('/users/card', async (req, res) => {
-    const token = await paymentRepository.tokenizeCard();
-    const user = { id: '00594a5c10e240988a0e6e2842f067bf' };
+    const { cardToken } = req.body;
+    const { user } = req;
     try {
-      await paymentService.associateCardToken(user, token);
+      await paymentService.associateCardToken(user, cardToken);
       res.send('ok');
     } catch (e) {
       res.status(406).send();
