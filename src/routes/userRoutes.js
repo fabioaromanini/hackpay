@@ -41,6 +41,6 @@ module.exports = app => {
       userService.updateToken(phoneNumber, token),
       notificationService.sendTokenNotification(phoneNumber, token),
     ]);
-    res.send({ token });
+    res.send();
   });
 };
