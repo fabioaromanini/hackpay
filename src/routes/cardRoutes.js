@@ -9,7 +9,7 @@ module.exports = app => {
     const amount = parseInt(req.body.amount || '100');
 
     try {
-      const transactionId = await paymentRepository.preAuthCreditCard(
+      await paymentRepository.preAuthCreditCard(
         amount,
         'CASH IN',
         HACK_PAY_ID,
