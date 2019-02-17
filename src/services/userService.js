@@ -12,7 +12,12 @@ const getUser = async phoneNumber => {
   return user;
 };
 
+const updateToken = async (phoneNumber, token) => {
+  await userRepository.updateToken(phoneNumber, token);
+};
+
 module.exports = {
   createToken,
   getUser,
+  updateToken,
 };

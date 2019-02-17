@@ -36,6 +36,7 @@ module.exports = app => {
     }
 
     const token = userService.createToken();
+    await userService.updateToken(phoneNumber, token);
     res.send({ token });
   });
 };
