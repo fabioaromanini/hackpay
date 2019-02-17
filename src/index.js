@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const configAuthentication = require('./config/authentication');
 const registerUserRoutes = require('./routes/userRoutes');
+const registerCardRoutes = require('./routes/cardRoutes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(cors());
 configAuthentication(app);
 
 registerUserRoutes(app);
+registerCardRoutes(app);
 
 app.listen(8080, () => {
   console.log('Listening on port 8080');

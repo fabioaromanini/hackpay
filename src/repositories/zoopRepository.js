@@ -74,14 +74,13 @@ module.exports.preAuthCreditCard = async (
     on_behalf_of,
     customer,
     payment_type: 'credit',
-    capture: 'false',
   };
   try {
     const response = await axios.post(url, data, {
       headers: headers,
       auth: auth,
     });
-    return response.data;
+    return response.data.id;
   } catch (e) {
     throw e;
   }
@@ -109,7 +108,6 @@ module.exports.paymentCapture = async (amount, transactionID, on_behalf_of) => {
 module.exports.transactionP2P = async (
   amount,
   description,
-  transfer_date,
   ownerID,
   receiverID
 ) => {
@@ -118,7 +116,6 @@ module.exports.transactionP2P = async (
   const data = {
     amount,
     description,
-    transfer_date,
   };
   try {
     const response = await axios.post(url, data, {
@@ -127,6 +124,7 @@ module.exports.transactionP2P = async (
     });
     return response.data;
   } catch (e) {
+    console.log(e.response.data);
     throw e;
   }
 };
