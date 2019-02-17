@@ -22,8 +22,9 @@ module.exports = app => {
 
   app.post('/users/card', async (req, res) => {
     const token = paymentRepository.tokenizeCard();
+    const user = { id: '00594a5c10e240988a0e6e2842f067bf' };
     try {
-      await paymentService.associateCardToken(req.user, token);
+      await paymentService.associateCardToken(user, token);
       res.send('ok');
     } catch (e) {
       res.status(406).send();
