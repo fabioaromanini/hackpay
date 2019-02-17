@@ -1,5 +1,5 @@
 const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const userRepository = require('../repositories/userRepository');
 
 module.exports = app => {
@@ -20,7 +20,7 @@ module.exports = app => {
   });
 
   passport.use(
-    new Strategy(
+    new LocalStrategy(
       {
         usernameField: 'phoneNumber',
         passwordField: 'token',
