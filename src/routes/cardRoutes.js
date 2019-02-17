@@ -6,7 +6,7 @@ const HACK_PAY_ID =
 module.exports = app => {
   app.post('/card/cash', async (req, res) => {
     const user = req.user || { id: '00594a5c10e240988a0e6e2842f067bf' };
-    const amount = parseInt(req.body.amount || '100');
+    const amount = parseInt(req.body.amount || '10000');
 
     try {
       await paymentRepository.preAuthCreditCard(
