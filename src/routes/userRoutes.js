@@ -1,3 +1,5 @@
+const passport = require('passport');
+
 module.exports = app => {
   app.post('/users/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
